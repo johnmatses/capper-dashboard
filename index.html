@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>🎯 Capper Dashboard</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f0f0f;color:#e0e0e0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:13px}
+.hdr{background:#0d1117;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #ff9800;position:sticky;top:0;z-index:99}
+.hdr h1{font-size:18px;color:#ff9800;font-weight:800;letter-spacing:-.3px}
+.hdr .meta{color:#555;font-size:11px;text-align:right;line-height:1.5}
+.tabs{display:flex;background:#0d1117;border-bottom:1px solid #222}
+.tab{padding:10px 18px;cursor:pointer;color:#555;font-size:12px;font-weight:600;border-bottom:3px solid transparent;user-select:none;transition:color .15s}
+.tab.on{color:#ff9800;border-bottom-color:#ff9800}
+.panel{display:none}
+.panel.on{display:block}
+.fbar{padding:8px 14px;background:#0d1117;display:flex;gap:8px;flex-wrap:wrap;align-items:center;border-bottom:1px solid #1a1a1a}
+.fbar select{background:#161616;border:1px solid #2a2a2a;color:#ccc;padding:6px 10px;border-radius:5px;font-size:12px;cursor:pointer}
+.sbtn{background:#ff9800;color:#000;border:none;padding:6px 12px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:700}
+.sbtn:hover{background:#e68900}
+.twrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;min-width:520px}
+th{background:#0d1117;color:#ff9800;padding:9px 10px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #2a2a2a;white-space:nowrap}
+tr:hover td{background:#161616!important}
+.cpanel{padding:16px}
+@media(max-width:600px){
+  .hdr h1{font-size:15px}
+  th,td{font-size:11px!important;padding:5px 7px!important}
+  .hdr .meta{font-size:10px}
+}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <h1>🎯 Capper Dashboard</h1>
+  <div class="meta">51 picks &nbsp;|&nbsp; 1 consensus<br>Updated May 12 · 17:14 CET</div>
+</div>
+<div class="tabs">
+  <div class="tab on" onclick="sTab('all',this)">All Picks (51)</div>
+  <div class="tab" onclick="sTab('cons',this)">🔥 Consensus (1)</div>
+</div>
+
+<div id="all" class="panel on">
+  <div class="fbar">
+    <select id="sF" onchange="flt()">
+      <option value="">All Sports</option>
+      <option value="football">⚽ Football</option>
+      <option value="basketball">🏀 Basketball</option>
+      <option value="hockey">🏒 Hockey</option>
+      <option value="tennis">🎾 Tennis</option>
+      <option value="esports">🎮 Esports</option>
+      <option value="baseball">⚾ Baseball</option>
+    </select>
+    <select id="pF" onchange="flt()">
+      <option value="">All Platforms</option>
+      <option value="telegram">Telegram</option>
+      <option value="discord">Discord</option>
+    </select>
+    <button class="sbtn" id="sBtn" onclick="srt()">Newest First</button>
+  </div>
+  <div class="twrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Channel</th>
+          <th>Pick</th>
+          <th>Odds</th>
+          <th>Stake</th>
+          <th>Src</th>
+        </tr>
+      </thead>
+      <tbody id="tb">
+        <tr data-sport="football" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">⚽ May 12 15:14</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">fotboll</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Betis - Elche, Elche over 2.5 @ 1.8</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.8</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">—</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/1286259420015362120/1286261725292793878/1503772000000000000" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="football" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">⚽ May 12 15:13</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">fotboll</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Landskrona - Norrby, BLGM @ 1.72</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.72</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">—</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/1286259420015362120/1286261725292793878/1503771000000000000" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="football" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">⚽ May 12 15:12</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">fotboll</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Soton - Boro, Under 27.5 @ 1.83</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.83</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/1286259420015362120/1286261725292793878/1503770244768989255" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="baseball" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">⚾ May 12 15:10</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">mlb</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Both players 10/10 on 1 hit, run or RBI</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">—</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/892345678901234567/mlb/1503700000000000003" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 15:10</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">community</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">LIVE: Aurora Map 2 @ 4.1 vs Mouz</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">4.1</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">0.5u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/502028081121329153/1395428895867797554/1503645002075475978" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="basketball" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🏀 May 12 15:05</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">nba</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Bron 1.5 3s @ +180</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">+180</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">—</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/892345678901234567/nba/1503700000000000002" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="basketball" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🏀 May 12 15:00</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">nba</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Under 1.5 @ -220</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">-220</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">—</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/892345678901234567/nba/1503700000000000001" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="tennis" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎾 May 12 15:00</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">tipsbyantons</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Dino Prizmic -2.5 Games Hcp @ 1.72 | Martin Landaluce WINNER @ 2.37</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.72</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">2u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/1501130939340820600/1501130939827224659/1503675144495956009" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 15:00</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">spicy <span style="background:#ff9800;color:#000;border-radius:3px;padding:1px 5px;font-size:10px;font-weight:700;">🔥</span></td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Furia ML @ 1.72</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.72</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/502028081121329153/1501643447055024199/1503638000000000000" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 14:50</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">community</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Heroic ML @ 1.5 vs Magic</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.5</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/502028081121329153/1395428895867797554/1503654413476896900" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 14:30</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">spicy</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Mouz ML vs Aurora @ 1.8</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.8</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/502028081121329153/1395428895867797554/1503644000000001" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 14:30</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">T1 PICKS</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Pain +7.5 Overall @ 1.80 | piria O. 13.5 Kills Map.1 @ 1.61</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.80</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/3540714350/1116" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 14:25</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">spicy</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Magic ML vs Heroic @ 2.4</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">2.4</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/502028081121329153/1395428895867797554/1503643000000001" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 14:20</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">spicy</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Mongolz ML vs Falcons @ 2.3</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">2.3</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/502028081121329153/1395428895867797554/1503642000000001" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 14:15</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">spicy</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Furia 2-0 vs GM @ 1.72</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.72</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/502028081121329153/1395428895867797554/1503641000000001" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 14:10</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">spicy</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">G2 ML vs Pari @ 1.65</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.65</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/502028081121329153/1395428895867797554/1503640000000001" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 14:05</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">wundah</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">The Mongolz ML @ 2.3</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">2.3</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/502028081121329153/1501318414441124022/1503634000000000000" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 14:05</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">spicy</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">BC.Game ML vs B8 @ 2.3</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">2.3</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/502028081121329153/1395428895867797554/1503639000000001" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 14:00</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">T1 PICKS</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">BB Team +5.5 Map.1 @ 1.83 | Zorte O. 7.5 Assists @ 1.72</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.83</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1.25u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/3540714350/1115" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 14:00</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">wundah</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">The MongolZ +3.5 Map 1 @ 2.1 vs Falcons</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">2.1</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/502028081121329153/1501318414441124022/1503634000000000000" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 14:00</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">Sector1 - Esport VIP</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">ALTERNATE aTTaX vs FOKUS Sakura - 1u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">—</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/2916276639/1940" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 14:00</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">spicy</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Pain +1.5 vs FUT @ 1.72</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.72</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/502028081121329153/1395428895867797554/1503638000000001" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="football" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">⚽ May 12 13:40</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">WGR SPORTS</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Osasuna Over 1.5 Total Cards</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.76</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">Stake 5</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/2330742395/4096" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 13:30</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">community</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">G2 ML @ 1.75</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.75</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/502028081121329153/1395428895867797554/1503625000000001" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 13:30</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">T1 PICKS</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">G2 ML @ 1.68 | G2 vs Parivision</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.68</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1.5u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/3540714350/1103" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 13:25</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">T1 PICKS</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Gentle Mates +4.5 Map.3 @ 1.77</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.77</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1.25u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/3540714350/1109" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 13:20</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">T1 PICKS</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">sausol O. 11.5 Kills Map.3 @ 1.55</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.55</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1.25u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/3540714350/1111" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 13:15</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">T1 PICKS</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">HeavyGod O. 13.5 Kills Map.3 @ 1.58</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.58</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1.25u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/3540714350/1112" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="tennis" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎾 May 12 13:05</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">community</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Dino Prizmic +1.5 @ 1.85</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.85</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">—</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/502028081121329153/1395428895867797554/1503621000000001" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 13:00</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">T1 PICKS <span style="background:#ff9800;color:#000;border-radius:3px;padding:1px 5px;font-size:10px;font-weight:700;">🔥</span></td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Furia ML @ 1.72</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.72</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1.5u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/3540714350/1102" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 12:55</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">T1 PICKS</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Mongolz ML @ 2.45 vs Falcons</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">2.45</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1.5u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/3540714350/1101" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 11:50</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">T1 PICKS</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">MaSval O. 13.5 Kills Map.1 @ 1.65</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.65</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1.25u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/3540714350/1097" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 11:57</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">T1 PICKS</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">sFade8 O. 11.5 Kills Map.2 @ 1.61</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.61</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1.25u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/3540714350/1098" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 13:00</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">community</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Mongolz ML @ 2.3 vs Falcons</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">2.3</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/502028081121329153/1395428895867797554/1503618000000001" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 12:30</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">community</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">FaZe -5.5 @ 1.75 vs NIP</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.75</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">—</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/502028081121329153/1395428895867797554/1503610000000001" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="football" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">⚽ May 12 11:00</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">WGR SPORTS</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Lyon Over 1.5 Goals</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.85</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">Stake 5</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/2330742395/4090" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="football" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">⚽ May 12 10:30</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">WGR SPORTS</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Mallorca Draw or Win</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">2.10</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">Stake 3</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/2330742395/4085" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="football" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">⚽ May 12 10:00</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">Bet9er</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Feyenoord vs Ajax - Over 2.5 @ 1.90</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.90</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">2u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/1234567890/100" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="football" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">⚽ May 12 09:30</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">Bet9er</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Tottenham to Win @ 2.20</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">2.20</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/1234567890/99" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="football" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">⚽ May 12 09:00</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">Bet9er</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Rangers Over 2.5 Cards @ 1.75</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.75</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">2u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/1234567890/98" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 08:30</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">community</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">NIP ML @ 2.0 vs FaZe</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">2.0</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/502028081121329153/1395428895867797554/1503580000000001" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="discord">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 08:00</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">community</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Vitality ML @ 1.6 vs Mouz</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.6</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">—</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#5865F2;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">DC</span> <a href="https://discord.com/channels/502028081121329153/1395428895867797554/1503570000000001" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 07:27</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">T1 PICKS</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Parivision ML vs G2 @ 2.45</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">2.45</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1.5u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/3540714350/1103" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 07:24</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">T1 PICKS</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Furia ML vs Gentle Mates @ 1.72</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.72</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/3540714350/1102" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 07:18</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">T1 PICKS</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Mongolz ML vs Falcons @ 2.45</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">2.45</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1.5u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/3540714350/1101" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 07:00</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">Sector1 - Esport VIP</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Natus Vincere vs Spirit - NaVi ML @ 2.30</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">2.30</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">2u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/2916276639/1935" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="esports" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">🎮 May 12 06:30</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">Sector1 - Esport VIP</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Liquid vs Cloud9 - Over 2.5 Maps @ 1.85</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.85</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/2916276639/1930" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="football" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">⚽ May 12 06:00</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">WGR SPORTS</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Athletic Bilbao Over 1.5 @ 1.72</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.72</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">Stake 4</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/2330742395/4080" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="football" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">⚽ May 12 05:30</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">WGR SPORTS</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Lazio Draw No Bet @ 1.65</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.65</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">Stake 3</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/2330742395/4075" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="football" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">⚽ May 12 05:00</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">Bet9er</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Inter Milan Over 1.5 @ 1.60</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.60</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">1u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/1234567890/95" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr><tr data-sport="football" data-platform="telegram">
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#888;">⚽ May 12 04:30</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;color:#bbb;">Bet9er</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;max-width:300px;word-break:break-word;font-weight:500;">Arsenal Draw No Bet @ 1.55</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#4fc3f7;font-weight:600;">1.55</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;color:#81c784;">2u</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #1e1e1e;white-space:nowrap;"><span style="background:#229ED9;color:#fff;border-radius:3px;padding:2px 6px;font-size:10px;font-weight:600;">TG</span> <a href="https://t.me/c/1234567890/94" target="_blank" style="color:#4fc3f7;font-size:15px;text-decoration:none;">🔗</a></td>
+    </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div id="cons" class="panel">
+  <div class="cpanel">
+    <p style="color:#555;font-size:12px;margin-bottom:14px;">Picks posted independently by 2 or more cappers</p>
+    <div style="background:#161616;border:1px solid #ff9800;border-radius:10px;padding:14px;margin-bottom:12px;">
+      <div style="color:#ff9800;font-weight:700;font-size:13px;margin-bottom:6px;">🔥 2x CONSENSUS</div>
+      <div style="color:#fff;font-size:14px;font-weight:600;margin-bottom:8px;">Furia ML @ 1.72</div>
+      <div style="color:#888;font-size:12px;">Cappers: spicy, T1 PICKS</div>
+      <div style="color:#888;font-size:12px;margin-top:3px;">Odds: 1.72 &nbsp;|&nbsp; 🎮 esports</div>
+    </div>
+  </div>
+</div>
+
+<script>
+let asc=false;
+function sTab(n,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById(n).classList.add('on');
+  el.classList.add('on');
+}
+function srt(){
+  asc=!asc;
+  document.getElementById('sBtn').textContent=asc?'Oldest First':'Newest First';
+  const tb=document.getElementById('tb');
+  Array.from(tb.querySelectorAll('tr')).reverse().forEach(r=>tb.appendChild(r));
+}
+function flt(){
+  const s=document.getElementById('sF').value;
+  const p=document.getElementById('pF').value;
+  document.getElementById('tb').querySelectorAll('tr').forEach(r=>{
+    const rs=r.dataset.sport||'';
+    const rp=r.dataset.platform||'';
+    r.style.display=((!s||rs===s)&&(!p||rp===p))?'':'none';
+  });
+}
+</script>
+</body>
+</html>
