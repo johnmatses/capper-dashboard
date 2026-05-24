@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discord Token Refresh</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #1a1a2e; color: #e0e0e0; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .card { background: #16213e; border-radius: 16px; padding: 32px 24px; max-width: 420px; width: 100%; box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+    .logo { font-size: 48px; text-align: center; margin-bottom: 12px; }
+    h1 { text-align: center; font-size: 22px; color: #fff; margin-bottom: 6px; }
+    .sub { text-align: center; color: #888; font-size: 14px; margin-bottom: 28px; }
+    .step { background: #0f3460; border-radius: 10px; padding: 14px 16px; margin-bottom: 12px; display: flex; align-items: flex-start; gap: 12px; }
+    .step-num { background: #533483; color: #fff; border-radius: 50%; width: 26px; height: 26px; min-width: 26px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: bold; }
+    .step-text { font-size: 14px; line-height: 1.5; color: #ccc; }
+    .step-text strong { color: #fff; }
+    .btn { display: block; width: 100%; padding: 16px; background: #5865f2; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 16px; text-align: center; }
+    .btn.gray { background: #4f545c; margin-top: 12px; }
+    .btn:active { opacity: 0.8; }
+    textarea { width: 100%; background: #0d1b2a; color: #a8d8a8; border: 1px solid #333; border-radius: 8px; padding: 12px; font-family: monospace; font-size: 13px; margin-top: 16px; resize: none; }
+    #status { margin-top: 16px; padding: 12px; border-radius: 8px; font-size: 14px; text-align: center; display: none; }
+    .ok { background: #1a3a1a; color: #3ba55c; border: 1px solid #3ba55c; }
+    .err { background: #3a1a1a; color: #ed4245; border: 1px solid #ed4245; }
+    .loading { background: #1a2a3a; color: #5865f2; border: 1px solid #5865f2; }
+    .codebox { background: #0d1b2a; border: 1px solid #333; border-radius: 8px; padding: 12px; font-family: monospace; font-size: 11px; color: #a8d8a8; word-break: break-all; line-height: 1.6; margin-top: 10px; }
+    hr { border: none; border-top: 1px solid #2a2a4a; margin: 20px 0; }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">🔑</div>
+  <h1>Discord Token Refresh</h1>
+  <p class="sub">Uppdatera Agent Cappers Discord-access</p>
+
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-text">Öppna <strong>discord.com</strong> i webbläsaren och logga in.</div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-text">Tryck <strong>F12</strong> (dator) eller öppna <strong>Konsol</strong> i webbläsarmenyn. Klistra in koden nedan och tryck Enter.</div>
+  </div>
+
+  <div class="codebox" id="jsCode">(webpackChunkdiscord_app.push([[''],{},e=>{m=[];for(let c in e.c)m.push(e.c[c])}]),m).find(m=>m?.exports?.default?.getToken).exports.default.getToken()</div>
+  <button class="btn gray" onclick="copyCode()" id="copyBtn">📋 Kopiera kod</button>
+
+  <hr>
+
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-text">Klistra in token-strängen nedan och tryck <strong>Skicka</strong>.</div>
+  </div>
+
+  <textarea id="tokenInput" rows="3" placeholder="Klistra in token här..."></textarea>
+  <button class="btn" onclick="submitToken()">🚀 Skicka till Agent Capper</button>
+  <div id="status"></div>
+</div>
+
+<script>
+function copyCode() {
+  navigator.clipboard.writeText(document.getElementById('jsCode').textContent.trim()).then(() => {
+    document.getElementById('copyBtn').textContent = '✅ Kopierad!';
+    setTimeout(() => document.getElementById('copyBtn').textContent = '📋 Kopiera kod', 2000);
+  });
+}
+
+async function submitToken() {
+  const token = document.getElementById('tokenInput').value.trim();
+  if (!token || token.length < 30) { showStatus('❌ Token för kort — kolla att du kopierade rätt.', 'err'); return; }
+
+  showStatus('⏳ Skickar...', 'loading');
+
+  try {
+    const resp = await fetch('https://6a01caa41fa0bacb7ccc48ca.base44.app/api/functions/discordTokenCapture', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token })
+    });
+    const data = await resp.json();
+    if (data.success) {
+      showStatus('✅ Klar! Agent Capper är ansluten som ' + data.discord_user + ' 🎉', 'ok');
+      document.getElementById('tokenInput').value = '';
+    } else {
+      showStatus('❌ ' + (data.error || 'Fel'), 'err');
+    }
+  } catch(e) {
+    showStatus('❌ Nätverksfel', 'err');
+  }
+}
+
+function showStatus(msg, cls) {
+  const el = document.getElementById('status');
+  el.textContent = msg; el.className = cls; el.style.display = 'block';
+}
+</script>
+</body>
+</html>
