@@ -6,41 +6,38 @@
     <title>Whop Login ✅</title>
     <style>
         body { font-family: -apple-system, sans-serif; background: #0f0f0f; color: #fff; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
-        .box { background: #1a1a1a; border: 1px solid #333; border-radius: 16px; padding: 32px; max-width: 500px; width: 90%; text-align: center; }
+        .box { background: #1a1a1a; border: 1px solid #333; border-radius: 16px; padding: 32px; max-width: 560px; width: 90%; text-align: center; }
         h2 { color: #00d4aa; margin-bottom: 8px; }
-        .code-box { background: #0f0f0f; border: 1px solid #444; border-radius: 8px; padding: 16px; margin: 16px 0; font-family: monospace; font-size: 12px; word-break: break-all; color: #00d4aa; }
+        .code-box { background: #0f0f0f; border: 1px solid #444; border-radius: 8px; padding: 16px; margin: 16px 0; font-family: monospace; font-size: 11px; word-break: break-all; text-align: left; }
+        .ok { color: #00d4aa; }
+        .err { color: #ff4444; }
         .btn { background: #00d4aa; color: #000; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 16px; }
-        .btn:active { opacity: 0.8; }
-        .status { margin-top: 16px; color: #888; font-size: 14px; }
+        .url-box { background: #0f0f0f; border: 1px solid #555; border-radius: 8px; padding: 12px; margin: 12px 0; font-family: monospace; font-size: 10px; word-break: break-all; color: #aaa; text-align: left; }
     </style>
 </head>
 <body>
 <div class="box">
-    <h2>✅ Whop Login</h2>
-    <p>Din authorization code:</p>
-    <div class="code-box" id="codeBox">Hämtar...</div>
-    <button class="btn" onclick="copyCode()">📋 Kopiera kod</button>
-    <p class="status" id="status">Klistra in koden i Telegram till @AgentCapper_Bot</p>
+    <h2>✅ Whop Callback</h2>
+    <p>Full URL (debug):</p>
+    <div class="url-box" id="fullUrl"></div>
+    <p>Parametrar:</p>
+    <div class="code-box" id="params"></div>
+    <button class="btn" onclick="copyAll()">📋 Kopiera allt</button>
+    <p style="color:#888;font-size:13px;margin-top:12px">Skicka skärmdump till AgentCapper</p>
 </div>
 <script>
+    document.getElementById('fullUrl').textContent = window.location.href;
+    
     const params = new URLSearchParams(window.location.search);
-    const code = params.get('code');
-    const error = params.get('error');
-    
-    if (code) {
-        document.getElementById('codeBox').textContent = code;
-        document.getElementById('status').textContent = 'Skicka denna kod till @AgentCapper_Bot i Telegram med kommandot: /whop_code ' + code;
-    } else if (error) {
-        document.getElementById('codeBox').textContent = 'FEL: ' + error;
-        document.getElementById('codeBox').style.color = '#ff4444';
-    } else {
-        document.getElementById('codeBox').textContent = 'Ingen kod hittades i URL:en';
+    let html = '';
+    for (const [key, val] of params.entries()) {
+        const cls = key === 'error' ? 'err' : 'ok';
+        html += `<span class="${cls}">${key}</span>: ${val}\n`;
     }
+    document.getElementById('params').innerHTML = html || '<span class="err">Inga parametrar i URL:en</span>';
     
-    function copyCode() {
-        navigator.clipboard.writeText(code || '').then(() => {
-            document.getElementById('status').textContent = '✅ Kopierad! Klistra in i Telegram: /whop_code [klistra in]';
-        });
+    function copyAll() {
+        navigator.clipboard.writeText(window.location.href);
     }
 </script>
 </body>
